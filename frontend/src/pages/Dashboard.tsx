@@ -35,7 +35,7 @@ export default function Dashboard({ user }: { user: any }) {
   }, [activeTab, user.id, searchQuery]);
 
   const handleSlackConnect = () => {
-    window.location.href = `http://localhost:5000/api/slack/connect?userId=${user.id}`;
+    window.location.href = `${api.defaults.baseURL}/slack/connect?userId=${user.id}`;
   };
 
   return (

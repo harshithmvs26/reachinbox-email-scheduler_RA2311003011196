@@ -37,6 +37,10 @@ app.get('/health', (req, res) => {
 const startServer = async () => {
   await setupElasticsearch();
   
+  if (process.env.RUN_WORKER !== 'false') {
+    import('./worker').then(() => console.log('Worker attached to server process.'));
+  }
+  
   app.listen(config.port, () => {
     console.log(`Server running on port ${config.port}`);
     console.log(`BullMQ dashboard available at http://localhost:${config.port}/admin/queues`);

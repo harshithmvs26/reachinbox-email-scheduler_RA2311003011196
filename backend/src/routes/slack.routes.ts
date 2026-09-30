@@ -39,7 +39,7 @@ router.get('/callback', async (req, res) => {
       });
 
       // Redirect back to frontend
-      res.redirect('http://localhost:5173/?slack_connected=true');
+      res.redirect(`${config.frontendUrl}/?slack_connected=true`);
     } else {
       res.status(400).send(`Slack OAuth Error: ${data.error}`);
     }
