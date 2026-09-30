@@ -8,13 +8,13 @@
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "worker": "ts-node-dev --respawn --transpile-only src/worker.ts",
     "build": "tsc",
-    "render-build": "prisma generate && prisma db push && tsc",
+    "render-build": "prisma generate && prisma db push && tsc --skipLibCheck",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --name init"
   },
   "dependencies": {
-    "@bull-board/api": "^5.15.1",
-    "@bull-board/express": "^5.15.1",
+    "@bull-board/api": "5.22.0",
+    "@bull-board/express": "5.22.0",
     "@elastic/elasticsearch": "^8.13.0",
     "@prisma/client": "^5.12.1",
     "bullmq": "^5.7.1",
