@@ -56,20 +56,24 @@ router.post('/schedule', upload.single('file'), async (req, res) => {
         }
       });
 
-      // Index in ElasticSearch (Scheduled)
-      await esClient.index({
-        index: 'emails',
-        id: record.id,
-        document: {
+      // Index in ElasticSearch (safe attempt)
+      try {
+        await esClient.index({
+          index: 'emails',
           id: record.id,
-          userId,
-          toEmail,
-          subject,
-          body,
-          status: 'SCHEDULED',
-          scheduledAt: record.scheduledAt,
-        }
-      });
+          document: {
+            id: record.id,
+            userId,
+            toEmail,
+            subject,
+            body,
+            status: 'SCHEDULED',
+            scheduledAt: record.scheduledAt,
+          }
+        });
+      } catch (esErr) {
+        console.warn('Elasticsearch indexing skipped (service offline):', esErr);
+      }
 
       // Add to BullMQ with incremental delay
       const job = await emailQueue.add(

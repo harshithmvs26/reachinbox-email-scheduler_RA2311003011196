@@ -8,6 +8,7 @@
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "worker": "ts-node-dev --respawn --transpile-only src/worker.ts",
     "build": "tsc",
+    "render-build": "prisma generate && prisma db push && tsc",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --name init"
   },
@@ -24,7 +25,9 @@
     "ioredis": "^5.3.2",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.13",
-    "axios": "^1.6.8"
+    "axios": "^1.6.8",
+    "prisma": "^5.12.1",
+    "typescript": "^5.4.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
@@ -32,8 +35,6 @@
     "@types/multer": "^1.4.11",
     "@types/node": "^20.12.7",
     "@types/nodemailer": "^6.4.14",
-    "prisma": "^5.12.1",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^5.4.5"
+    "ts-node-dev": "^2.0.0"
   }
 }

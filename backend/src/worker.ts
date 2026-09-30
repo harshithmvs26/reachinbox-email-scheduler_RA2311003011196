@@ -61,20 +61,24 @@ const worker = new Worker(emailQueueName, async (job: Job) => {
       data: { status: 'SENT', sentAt },
     });
 
-    // Index in Elasticsearch
-    await esClient.index({
-      index: 'emails',
-      id: emailId,
-      document: {
+    // Index in Elasticsearch (safe attempt)
+    try {
+      await esClient.index({
+        index: 'emails',
         id: emailId,
-        userId,
-        toEmail,
-        subject,
-        body,
-        status: 'SENT',
-        sentAt,
-      }
-    });
+        document: {
+          id: emailId,
+          userId,
+          toEmail,
+          subject,
+          body,
+          status: 'SENT',
+          sentAt,
+        }
+      });
+    } catch (esErr) {
+      console.warn('Elasticsearch indexing skipped (service offline):', esErr);
+    }
 
     console.log(`Email ${emailId} sent successfully.`);
 
