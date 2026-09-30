@@ -1,4 +1,3 @@
-import { format } from 'date-fns'; // We'll add date-fns later if not present, wait let's use native Date to avoid extra deps
 
 export default function EmailsTable({ emails, type, loading }: { emails: any[], type: 'scheduled' | 'sent', loading: boolean }) {
   if (loading) {
